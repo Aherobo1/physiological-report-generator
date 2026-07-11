@@ -1,0 +1,54 @@
+<div class="w-full page bg-white">
+    <!-- Main Content -->
+    <div class="px-8 py-6">
+        <!-- VO2 Pulse Section -->
+        <div class="mb-8">
+            <!-- VO2 Pulse Header -->
+            <div class="bg-gray-200 p-4 rounded-lg mb-4 text-center">
+                <h2 class="text-lg font-bold text-black">VO2 Pulse</h2>
+                {% if vo2_pulse_drop_bpm and vo2_pulse_drop_zone %}
+                <p class="text-black">
+                    Begins to drop at {{ vo2_pulse_drop_bpm | default('180 bpm')
+                    }} ({{ vo2_pulse_drop_zone | default('Zone 4') }})
+                </p>
+                {% else %}
+                <p class="text-black">Does not drop: Optimal</p>
+                {% endif %}
+            </div>
+
+            <!-- VO2 Pulse Graph -->
+            <div class="flex justify-center mb-6">
+                <img
+                    src="data:image/png;base64, {{ vo2_pulse_chart }}"
+                    alt="VO2 Pulse Chart"
+                    class="w-full max-w-4xl h-auto object-contain"
+                />
+            </div>
+        </div>
+
+        <!-- VO2 Breath Section -->
+        <div class="mb-8">
+            <!-- VO2 Breath Header -->
+            <div class="bg-gray-200 p-4 rounded-lg mb-4 text-center">
+                <h2 class="text-lg font-bold text-black">VO2 Breath</h2>
+                {% if vo2_breath_drop_bpm and vo2_breath_drop_zone %}
+                <p class="text-black">
+                    Begins to drop at {{ vo2_breath_drop_bpm | default('173
+                    bpm') }} ({{ vo2_breath_drop_zone | default('Zone 3') }})
+                </p>
+                {% else %}
+                <p class="text-black">Does not drop: Optimal</p>
+                {% endif %}
+            </div>
+
+            <!-- VO2 Breath Graph -->
+            <div class="flex justify-center mb-6">
+                <img
+                    src="data:image/png;base64, {{ vo2_breath_chart }}"
+                    alt="VO2 Breath Chart"
+                    class="w-full max-w-4xl h-auto object-contain"
+                />
+            </div>
+        </div>
+    </div>
+</div>

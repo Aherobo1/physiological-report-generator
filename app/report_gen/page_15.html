@@ -1,0 +1,529 @@
+<div class="w-full page bg-white">
+    <!-- Header Section -->
+    <!-- Main Content -->
+    <div class="px-8 py-6">
+        <!-- Page Title -->
+        <h1 class="text-3xl font-bold text-black mb-8 text-center">
+            Training Recommendations
+        </h1>
+
+        <!-- Training Recommendations Section -->
+        <div class="grid grid-cols-2 gap-8 mb-8">
+            <!-- Left Side: Zone Recommendations -->
+            <div class="bg-gray-200 p-4 rounded-lg border-2 border-gray-300">
+                <!-- Zone 2 Recommendations -->
+                <div class="mb-4">
+                    <h3 class="text-sm font-bold text-black mb-2">
+                        Zone 2 {{ zone2_frequency | default('3-4x/week') }}:
+                    </h3>
+                    <ul
+                        class="text-xs text-black space-y-0.5 list-disc list-inside ml-2"
+                    >
+                        <li>
+                            {{ zone2_duration | default('40+ minutes') }} of
+                            Steady State Cardio (HR
+                            <span class="border-b border-black"
+                                >{{ zone2_hr_range | default('____') }}</span
+                            >
+                            bpm)
+                        </li>
+                        <li>
+                            <span class="border-b border-black"
+                                >{{ zone2_speed | default('___')    }}</span
+                            >
+                            mph at {{ zone2_incline | default('2% Incline') }}
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Zone 3 Recommendations -->
+                <div>
+                    <h3 class="text-sm font-bold text-black mb-2">
+                        Zone 3: {{ zone3_frequency | default('1-2x/week') }}:
+                    </h3>
+                    <ul
+                        class="text-xs text-black space-y-0.5 list-disc list-inside ml-2"
+                    >
+                        <li>
+                            {{ zone3_duration | default('10-20 minutes') }} in
+                            zone 3 (HR
+                            <span class="border-b border-black"
+                                >{{ zone3_hr_range | default('____') }}</span
+                            >
+                            bpm)
+                        </li>
+                        <li>
+                            <span class="border-b border-black"
+                                >{{ zone3_speed | default('___') }}</span
+                            >mph + at {{ zone3_incline | default('2% Incline')
+                            }}
+                        </li>
+                        <li class="text-orange-500">
+                            Slow down cadence until HR reaches
+                            <span class="border-b border-orange-500"
+                                >{{ zone3_target_hr | default('___') }}</span
+                            >bpm
+                        </li>
+                        <li>
+                            <span class="border-b border-black"
+                                >{{ zone3_recovery_speed | default('____')
+                                }}</span
+                            >mph at {{ zone3_recovery_incline | default('2%
+                            Incline') }}
+                        </li>
+                        <li class="text-orange-500">
+                            Maintain HR in zone 1 (<span
+                                class="border-b border-orange-500"
+                                >{{ zone1_hr_range | default('____') }}</span
+                            >bpm) for {{ zone1_duration | default('4-8 minutes')
+                            }}
+                        </li>
+                        <li>
+                            Repeat {{ zone3_repeats | default('2-3 times') }}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Right Side: Training Table -->
+            <div>
+                <table class="w-full border-collapse text-xs">
+                    <thead>
+                        <tr>
+                            <th
+                                class="bg-cyan-300 border border-gray-400 px-2 py-1.5 text-black font-bold text-xs"
+                            >
+                                Type
+                            </th>
+                            <th
+                                class="bg-cyan-300 border border-gray-400 px-2 py-1.5 text-black font-bold text-xs"
+                            >
+                                Sets
+                            </th>
+                            <th
+                                class="bg-cyan-300 border border-gray-400 px-2 py-1.5 text-black font-bold text-xs"
+                            >
+                                Effort Duration
+                            </th>
+                            <th
+                                class="bg-cyan-300 border border-gray-400 px-2 py-1.5 text-black font-bold text-xs"
+                            >
+                                Zone
+                            </th>
+                            <th
+                                class="bg-cyan-300 border border-gray-400 px-2 py-1.5 text-black font-bold text-xs"
+                            >
+                                RPE
+                            </th>
+                            <th
+                                class="bg-cyan-300 border border-gray-400 px-2 py-1.5 text-black font-bold text-xs"
+                            >
+                                Recovery Duration
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Short Row -->
+                        <tr>
+                            <td
+                                class="bg-gray-100 border border-gray-400 px-2 py-1.5 text-center text-black font-medium text-xs"
+                            >
+                                Short
+                            </td>
+                            <td
+                                class="bg-gray-100 border border-gray-400 px-2 py-1.5 text-center text-black text-xs"
+                            >
+                                {{ short_sets | default('8-10') }}
+                            </td>
+                            <td
+                                class="bg-gray-100 border border-gray-400 px-2 py-1.5 text-center text-black text-xs"
+                            >
+                                {{ short_duration | default('10-30 seconds') }}
+                            </td>
+                            <td
+                                class="bg-gray-100 border border-gray-400 px-2 py-1.5 text-center text-black text-xs"
+                            >
+                                {{ short_zone | default('5') }}
+                            </td>
+                            <td
+                                class="bg-gray-100 border border-gray-400 px-2 py-1.5 text-center text-black text-xs"
+                            >
+                                {{ short_rpe | default('10') }}
+                            </td>
+                            <td
+                                class="bg-gray-100 border border-gray-400 px-2 py-1.5 text-center text-black text-xs"
+                            >
+                                {{ short_recovery | default('20-60 seconds') }}
+                            </td>
+                        </tr>
+
+                        <!-- Medium Row -->
+                        <tr>
+                            <td
+                                class="bg-gray-100 border border-gray-400 px-2 py-1.5 text-center text-black font-medium text-xs"
+                            >
+                                Medium
+                            </td>
+                            <td
+                                class="bg-gray-100 border border-gray-400 px-2 py-1.5 text-center text-black text-xs"
+                            >
+                                {{ medium_sets | default('6-8') }}
+                            </td>
+                            <td
+                                class="bg-gray-100 border border-gray-400 px-2 py-1.5 text-center text-black text-xs"
+                            >
+                                {{ medium_duration | default('30-90 seconds') }}
+                            </td>
+                            <td
+                                class="bg-gray-100 border border-gray-400 px-2 py-1.5 text-center text-black text-xs"
+                            >
+                                {{ medium_zone | default('4') }}
+                            </td>
+                            <td
+                                class="bg-gray-100 border border-gray-400 px-2 py-1.5 text-center text-black text-xs"
+                            >
+                                {{ medium_rpe | default('8-9') }}
+                            </td>
+                            <td
+                                class="bg-gray-100 border border-gray-400 px-2 py-1.5 text-center text-black text-xs"
+                            >
+                                {{ medium_recovery | default('30-90 seconds') }}
+                            </td>
+                        </tr>
+
+                        <!-- Long Row -->
+                        <tr>
+                            <td
+                                class="bg-gray-100 border border-gray-400 px-2 py-1.5 text-center text-black font-medium text-xs"
+                            >
+                                Long
+                            </td>
+                            <td
+                                class="bg-gray-100 border border-gray-400 px-2 py-1.5 text-center text-black text-xs"
+                            >
+                                {{ long_sets | default('4-6') }}
+                            </td>
+                            <td
+                                class="bg-gray-100 border border-gray-400 px-2 py-1.5 text-center text-black text-xs"
+                            >
+                                {{ long_duration | default('5-10 minutes') }}
+                            </td>
+                            <td
+                                class="bg-gray-100 border border-gray-400 px-2 py-1.5 text-center text-black text-xs"
+                            >
+                                {{ long_zone | default('3/4') }}
+                            </td>
+                            <td
+                                class="bg-gray-100 border border-gray-400 px-2 py-1.5 text-center text-black text-xs"
+                            >
+                                {{ long_rpe | default('7-8') }}
+                            </td>
+                            <td
+                                class="bg-gray-100 border border-gray-400 px-2 py-1.5 text-center text-black text-xs"
+                            >
+                                {{ long_recovery | default('2.5-5 minutes') }}
+                            </td>
+                        </tr>
+
+                        <!-- Tempo Row -->
+                        <tr>
+                            <td
+                                class="bg-gray-100 border border-gray-400 px-2 py-1.5 text-center text-black font-medium text-xs"
+                            >
+                                Tempo
+                            </td>
+                            <td
+                                class="bg-gray-100 border border-gray-400 px-2 py-1.5 text-center text-black text-xs"
+                            >
+                                {{ tempo_sets | default('2-3') }}
+                            </td>
+                            <td
+                                class="bg-gray-100 border border-gray-400 px-2 py-1.5 text-center text-black text-xs"
+                            >
+                                {{ tempo_duration | default('10-20 minutes') }}
+                            </td>
+                            <td
+                                class="bg-gray-100 border border-gray-400 px-2 py-1.5 text-center text-black text-xs"
+                            >
+                                {{ tempo_zone | default('3') }}
+                            </td>
+                            <td
+                                class="bg-gray-100 border border-gray-400 px-2 py-1.5 text-center text-black text-xs"
+                            >
+                                {{ tempo_rpe | default('6-7') }}
+                            </td>
+                            <td
+                                class="bg-gray-100 border border-gray-400 px-2 py-1.5 text-center text-black text-xs"
+                            >
+                                {{ tempo_recovery | default('4-8 minutes') }}
+                            </td>
+                        </tr>
+
+                        <!-- Cardio Row -->
+                        <tr>
+                            <td
+                                class="bg-gray-100 border border-gray-400 px-2 py-1.5 text-center text-black font-medium text-xs"
+                            >
+                                Cardio
+                            </td>
+                            <td
+                                class="bg-gray-100 border border-gray-400 px-2 py-1.5 text-center text-black text-xs"
+                            >
+                                {{ cardio_sets | default('1') }}
+                            </td>
+                            <td
+                                class="bg-gray-100 border border-gray-400 px-2 py-1.5 text-center text-black text-xs"
+                            >
+                                {{ cardio_duration | default('>40 minutes') }}
+                            </td>
+                            <td
+                                class="bg-gray-100 border border-gray-400 px-2 py-1.5 text-center text-black text-xs"
+                            >
+                                {{ cardio_zone | default('2') }}
+                            </td>
+                            <td
+                                class="bg-gray-100 border border-gray-400 px-2 py-1.5 text-center text-black text-xs"
+                            >
+                                {{ cardio_rpe | default('4-5') }}
+                            </td>
+                            <td
+                                class="bg-gray-100 border border-gray-400 px-2 py-1.5 text-center text-black text-xs"
+                            >
+                                {{ cardio_recovery | default('N/A') }}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Training Week Example Section -->
+        <div class="mb-8">
+            <h2 class="text-2xl font-bold text-black mb-6 text-center">
+                Training Week Example with Progression
+            </h2>
+
+            <!-- Week 1 -->
+            <div class="mb-4">
+                <div class="grid grid-cols-7 gap-1">
+                    <!-- Monday -->
+                    <div class="bg-cyan-300 p-2 text-center">
+                        <div class="font-bold text-black text-sm mb-1">
+                            Monday
+                        </div>
+                    </div>
+                    <!-- Tuesday -->
+                    <div class="bg-cyan-300 p-2 text-center">
+                        <div class="font-bold text-black text-sm mb-1">
+                            Tuesday
+                        </div>
+                    </div>
+                    <!-- Wednesday -->
+                    <div class="bg-cyan-300 p-2 text-center">
+                        <div class="font-bold text-black text-sm mb-1">
+                            Wednesday
+                        </div>
+                    </div>
+                    <!-- Thursday -->
+                    <div class="bg-cyan-300 p-2 text-center">
+                        <div class="font-bold text-black text-sm mb-1">
+                            Thursday
+                        </div>
+                    </div>
+                    <!-- Friday -->
+                    <div class="bg-cyan-300 p-2 text-center">
+                        <div class="font-bold text-black text-sm mb-1">
+                            Friday
+                        </div>
+                    </div>
+                    <!-- Saturday -->
+                    <div class="bg-cyan-300 p-2 text-center">
+                        <div class="font-bold text-black text-sm mb-1">
+                            Saturday
+                        </div>
+                    </div>
+                    <!-- Sunday -->
+                    <div class="bg-cyan-300 p-2 text-center">
+                        <div class="font-bold text-black text-sm mb-1">
+                            Sunday
+                        </div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-7 gap-1 mt-1">
+                    <!-- Monday Content -->
+                    <div class="bg-gray-200 p-2 text-center min-h-[60px]">
+                        <div class="text-xs text-black">
+                            {{ week1_mon_zone | default('Zone 2') }}
+                        </div>
+                        <div class="text-xs text-black">
+                            {{ week1_mon_duration | default('45 mins') }}
+                        </div>
+                    </div>
+                    <!-- Tuesday Content -->
+                    <div class="bg-gray-200 p-2 text-center min-h-[60px]">
+                        <div class="text-xs text-black">
+                            {{ week1_tue_zone | default('Zone 2') }}
+                        </div>
+                        <div class="text-xs text-black">
+                            {{ week1_tue_duration | default('45 mins') }}
+                        </div>
+                    </div>
+                    <!-- Wednesday Content -->
+                    <div class="bg-gray-200 p-2 text-center min-h-[60px]">
+                        <div class="text-xs text-black">
+                            {{ week1_wed_zone | default('Zone 3') }}
+                        </div>
+                        <div class="text-xs text-black">
+                            {{ week1_wed_duration1 | default('10mins On') }}
+                        </div>
+                        <div class="text-xs text-black">
+                            {{ week1_wed_duration2 | default('8mins Rest') }}
+                        </div>
+                        <div class="text-xs text-black">
+                            {{ week1_wed_sets | default('x2') }}
+                        </div>
+                    </div>
+                    <!-- Thursday Content -->
+                    <div class="bg-gray-200 p-2 text-center min-h-[60px]">
+                        <div class="text-xs text-black">
+                            {{ week1_thu_content | default('') }}
+                        </div>
+                    </div>
+                    <!-- Friday Content -->
+                    <div class="bg-gray-200 p-2 text-center min-h-[60px]">
+                        <div class="text-xs text-black">
+                            {{ week1_fri_zone | default('Zone 2') }}
+                        </div>
+                        <div class="text-xs text-black">
+                            {{ week1_fri_duration | default('45 mins') }}
+                        </div>
+                    </div>
+                    <!-- Saturday Content -->
+                    <div class="bg-gray-200 p-2 text-center min-h-[60px]">
+                        <div class="text-xs text-black">
+                            {{ week1_sat_content | default('') }}
+                        </div>
+                    </div>
+                    <!-- Sunday Content -->
+                    <div class="bg-gray-200 p-2 text-center min-h-[60px]">
+                        <div class="text-xs text-black">
+                            {{ week1_sun_content | default('') }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Week 2 -->
+            <div class="mb-4">
+                <div class="grid grid-cols-7 gap-1">
+                    <!-- Monday -->
+                    <div class="bg-cyan-300 p-2 text-center">
+                        <div class="font-bold text-black text-sm mb-1">
+                            Monday
+                        </div>
+                    </div>
+                    <!-- Tuesday -->
+                    <div class="bg-cyan-300 p-2 text-center">
+                        <div class="font-bold text-black text-sm mb-1">
+                            Tuesday
+                        </div>
+                    </div>
+                    <!-- Wednesday -->
+                    <div class="bg-cyan-300 p-2 text-center">
+                        <div class="font-bold text-black text-sm mb-1">
+                            Wednesday
+                        </div>
+                    </div>
+                    <!-- Thursday -->
+                    <div class="bg-cyan-300 p-2 text-center">
+                        <div class="font-bold text-black text-sm mb-1">
+                            Thursday
+                        </div>
+                    </div>
+                    <!-- Friday -->
+                    <div class="bg-cyan-300 p-2 text-center">
+                        <div class="font-bold text-black text-sm mb-1">
+                            Friday
+                        </div>
+                    </div>
+                    <!-- Saturday -->
+                    <div class="bg-cyan-300 p-2 text-center">
+                        <div class="font-bold text-black text-sm mb-1">
+                            Saturday
+                        </div>
+                    </div>
+                    <!-- Sunday -->
+                    <div class="bg-cyan-300 p-2 text-center">
+                        <div class="font-bold text-black text-sm mb-1">
+                            Sunday
+                        </div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-7 gap-1 mt-1">
+                    <!-- Monday Content -->
+                    <div class="bg-gray-200 p-2 text-center min-h-[60px]">
+                        <div class="text-xs text-black">
+                            {{ week2_mon_zone | default('Zone 2') }}
+                        </div>
+                        <div class="text-xs text-black">
+                            {{ week2_mon_duration | default('50 mins') }}
+                        </div>
+                    </div>
+                    <!-- Tuesday Content -->
+                    <div class="bg-gray-200 p-2 text-center min-h-[60px]">
+                        <div class="text-xs text-black">
+                            {{ week2_tue_zone | default('Zone 2') }}
+                        </div>
+                        <div class="text-xs text-black">
+                            {{ week2_tue_duration | default('50 mins') }}
+                        </div>
+                    </div>
+                    <!-- Wednesday Content -->
+                    <div class="bg-gray-200 p-2 text-center min-h-[60px]">
+                        <div class="text-xs text-black">
+                            {{ week2_wed_zone | default('Zone 3') }}
+                        </div>
+                        <div class="text-xs text-black">
+                            {{ week2_wed_duration1 | default('10mins On') }}
+                        </div>
+                        <div class="text-xs text-black">
+                            {{ week2_wed_duration2 | default('6mins Rest') }}
+                        </div>
+                        <div class="text-xs text-black">
+                            {{ week2_wed_sets | default('x2') }}
+                        </div>
+                    </div>
+                    <!-- Thursday Content -->
+                    <div class="bg-gray-200 p-2 text-center min-h-[60px]">
+                        <div class="text-xs text-black">
+                            {{ week2_thu_content | default('') }}
+                        </div>
+                    </div>
+                    <!-- Friday Content -->
+                    <div class="bg-gray-200 p-2 text-center min-h-[60px]">
+                        <div class="text-xs text-black">
+                            {{ week2_fri_zone | default('Zone 2') }}
+                        </div>
+                        <div class="text-xs text-black">
+                            {{ week2_fri_duration | default('50 mins') }}
+                        </div>
+                    </div>
+                    <!-- Saturday Content -->
+                    <div class="bg-gray-200 p-2 text-center min-h-[60px]">
+                        <div class="text-xs text-black">
+                            {{ week2_sat_content | default('') }}
+                        </div>
+                    </div>
+                    <!-- Sunday Content -->
+                    <div class="bg-gray-200 p-2 text-center min-h-[60px]">
+                        <div class="text-xs text-black">
+                            {{ week2_sun_content | default('') }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+</div>

@@ -1,0 +1,40 @@
+<div
+    class="w-full page bg-black text-white relative overflow-hidden"
+>
+    <!-- ISHP Logo/Text -->
+    <div class="absolute top-8 left-8 z-20">
+        <h1 class="text-2xl font-bold tracking-wider">ISHP</h1>
+    </div>
+
+    <!-- Diagonal Cyan Stripe -->
+    <div class="absolute top-0 left-0 w-full h-full">
+        <div
+            class="absolute top-0 left-0 w-96 h-full bg-gradient-to-r from-cyan-300 to-cyan-400 transform -skew-x-12 origin-top-left"
+        ></div>
+    </div>
+
+    <!-- Main Content Container -->
+    <div
+        class="relative z-10 flex flex-col justify-center items-end h-full pr-16"
+    >
+        <!-- BIO-PERFORMX Section -->
+        <div class="text-right mb-8">
+            <h1 class="text-6xl font-bold tracking-wider mb-2">BIO-PERFORMX</h1>
+            <p class="text-3xl italic font-light">Endurance</p>
+        </div>
+
+        <!-- Name and Date Section -->
+        <div class="text-right mt-16">
+            <h2 class="text-4xl font-bold tracking-wider mb-2">
+                {{ name|upper }}
+            </h2>
+            <h2 class="text-4xl font-bold tracking-wider mb-6">
+                {{ surname|upper }}
+            </h2>
+            <p class="text-xl italic underline">{{ date }}</p>
+        </div>
+    </div>
+
+    <!-- Dotted Pattern at Bottom -->
+</div>
+

@@ -1,0 +1,42 @@
+<div class="w-full page bg-white">
+    <!-- Main Content -->
+    <div class="px-8 py-6">
+        <!-- Page Title -->
+        <h1 class="text-3xl font-bold text-black mb-6">Cardio Metrics</h1>
+
+        <!-- Active Metabolic Rate Assessment Section -->
+        <h2 class="text-xl font-bold text-black mb-4">
+            Active Metabolic Rate Assessment
+        </h2>
+        <p class="text-gray-700 text-sm mb-8">
+            The active metabolic rate assessment is a key measure of aerobic
+            fitness. It helps determine your specific heart rate zones and how
+            well your body uses carbohydrates and fats as fuel while you
+            exercise. It is also an indicator of overall health and wellbeing.
+        </p>
+
+        <!-- VO2 Max Section -->
+        <div class="mb-8">
+            <!-- VO2 Max Table -->
+            <div class="mb-8 flex justify-center">
+                <img
+                    src="data:image/png;base64, {{ vo2_max_table }}"
+                    alt="VO2 Max Table"
+                    class="table-image"
+                />
+            </div>
+        </div>
+
+        <!-- Personalized Heart Rate Zones Section -->
+        <div class="mb-8">
+            <!-- Heart Rate Zones Table -->
+            <div class="flex justify-center">
+                <img
+                    src="data:image/png;base64, {{ hr_zones_table }}"
+                    alt="Heart Rate Zones Table"
+                    class="table-image"
+                />
+            </div>
+        </div>
+    </div>
+</div>

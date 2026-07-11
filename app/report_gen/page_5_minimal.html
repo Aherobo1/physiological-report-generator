@@ -1,0 +1,114 @@
+<div class="w-full bg-white">
+    <!-- Header Section -->
+
+    <!-- Main Content -->
+    <div class="px-8 py-2">
+        <!-- Page Title -->
+        <h1 class="text-3xl font-bold text-black mb-3">Nutrition Guidelines</h1>
+
+        <!-- Section Title -->
+        <h2 class="text-xl font-bold text-black mb-2">
+            Resting Metabolic Rate Assessment
+        </h2>
+        <p class="text-gray-700 text-sm mb-4">
+            The resting metabolic rate assessment determines the number of
+            calories that you burn at rest, and metabolic health. It is also an
+            indicator of overall health and well-being.
+        </p>
+
+        <!-- Slow vs Fast Metabolism Section -->
+        <div class="mb-6">
+            <div class="flex justify-center">
+                <img
+                    src="data:image/png;base64,{{ metabolism_chart }}"
+                    alt="Slow vs Fast Metabolism Chart"
+                    class="max-w-full h-auto max-h-40"
+                />
+            </div>
+        </div>
+
+        <!-- Fuel Source Section -->
+        <div class="mb-6">
+            <div class="flex justify-center">
+                <img
+                    src="data:image/png;base64,{{ fuel_source_chart }}"
+                    alt="Fuel Source Chart"
+                    class="max-w-full h-auto max-h-40"
+                />
+            </div>
+        </div>
+
+        <!-- Caloric Intake Section -->
+        <div class="px-6 mb-6">
+            <h3 class="text-2xl font-bold text-black mb-4 text-center">
+                Caloric Intake
+            </h3>
+
+            <!-- Calculation Formula -->
+            <div class="flex items-center justify-center space-x-4 text-center">
+                <!-- Resting Metabolic -->
+                <div class="bg-gray-200 p-3 rounded-lg">
+                    <div class="text-lg font-bold text-black">
+                        {{ resting_calories }}kCals
+                    </div>
+                    <div class="text-xs text-gray-600 mt-1">
+                        <div>Resting</div>
+                        <div>Metabolic</div>
+                    </div>
+                </div>
+
+                <!-- Plus sign -->
+                <div class="text-2xl font-bold text-black">+</div>
+
+                <!-- NEAT -->
+                <div class="bg-gray-200 p-3 rounded-lg">
+                    <div class="text-lg font-bold text-black">
+                        {{ neat_calories }}kCals
+                    </div>
+                    <div class="text-xs text-gray-600 mt-1">NEAT</div>
+                </div>
+
+                <!-- Minus sign -->
+                <div class="text-2xl font-bold text-black">-</div>
+
+                <!-- Weight Loss -->
+                <div class="bg-gray-200 p-3 rounded-lg">
+                    <div class="text-lg font-bold text-black">
+                        {{ weight_loss_calories }}kCals
+                    </div>
+                    <div class="text-xs text-gray-600 mt-1">
+                        <div>to lose {{ weight_loss_rate }}lbs</div>
+                        <div>per week</div>
+                    </div>
+                </div>
+
+                <!-- Equals sign -->
+                <div class="text-2xl font-bold text-black">=</div>
+
+                <!-- Total -->
+                <div class="bg-gray-200 p-3 rounded-lg">
+                    <div class="text-lg font-bold text-black">
+                        ~{{ total_calories }}kCals
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Resting Heart Rate Table Section -->
+        {% if rhr_table %}
+        <div class="mb-4">
+            <h2 class="text-xl font-bold text-black mb-4 text-center">
+                Resting Heart Rate
+            </h2>
+            <div class="flex justify-center">
+                <img
+                    src="data:image/png;base64, {{ rhr_table }}"
+                    alt="Resting Heart Rate Table"
+                    class="table-image"
+                />
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+

@@ -1,0 +1,140 @@
+<div class="w-full page bg-white">
+    <div class="px-1 py-6">
+        <!-- Page Title -->
+        <h1 class="text-2xl font-bold text-black mb-6 text-center">
+            Weekly Meal Plan Breakdown
+        </h1>
+
+        <!-- Caloric Deficit Example Section -->
+        <div class="mb-8">
+            <h2 class="text-xl font-bold text-black mb-4 text-center">
+                Caloric Deficit Example
+            </h2>
+
+            <!-- Weekly Grid -->
+            <div class="grid grid-cols-7 gap-0 mb-6">
+                {% set days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] %}
+                {% for i in range(7) %}
+                <div
+                    class="border border-gray-300 text-center
+                        {% if i == 0 %} rounded-tl-lg rounded-bl-lg {% endif %}
+                        {% if i == 6 %} rounded-tr-lg rounded-br-lg {% endif %}
+                        {% if i < 5 %} bg-cyan-300 {% else %} bg-white {% endif %}"
+                    style="padding: 0"
+                >
+                    <!-- Day Row (Always blue) -->
+                    <div class="bg-blue-300
+                        {% if i == 0 %} rounded-tl-lg {% endif %}
+                        {% if i == 6 %} rounded-tr-lg {% endif %}
+                        text-black text-sm font-bold px-2 py-1"
+                        style="border-top-left-radius: {% if i == 0 %}0.5rem{% else %}0{% endif %}; border-top-right-radius: {% if i == 6 %}0.5rem{% else %}0{% endif %};"
+                    >
+                        {{ days[i] }}
+                    </div>
+                    <!-- Macro Body (fills to the bottom, cyan or white) -->
+                    <div class="flex flex-col items-center py-1 px-2">
+                        <div class="font-bold text-sm text-black mb-1">
+                            {{ deficit_calories | default('1725KCals') }} KCals
+                        </div>
+                        <div class="text-xs text-black leading-tight text-left">
+                            <div>{{ deficit_protein | default('120g Protein') }}</div>
+                            <div>{{ deficit_carbs | default('155g Carbs') }}</div>
+                            <div>{{ deficit_fat | default('69g Fat') }}</div>
+                            <div>{{ deficit_fiber | default('25g Fibre') }}</div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Caloric Deficit with Maintenance/Refeed Example Section -->
+        <div class="mb-8">
+            <h2 class="text-xl font-bold text-black mb-4 text-center">
+                Caloric Deficit with Maintenance/Refeed Example
+            </h2>
+
+            <!-- Weekly Grid -->
+            <div class="grid grid-cols-7 gap-0 mb-6">
+                {% for i in range(7) %}
+                <div class="border border-gray-300 text-center
+                    {% if i == 0 %} rounded-tl-lg rounded-bl-lg {% endif %}
+                    {% if i == 6 %} rounded-tr-lg rounded-br-lg {% endif %}
+                    {% if i < 5 %} bg-cyan-300 {% else %} bg-white {% endif %}"
+                    style="padding: 0"
+                >
+                    <!-- Day Row (Always blue) -->
+                    <div class="bg-blue-300
+                        {% if i == 0 %} rounded-tl-lg {% endif %}
+                        {% if i == 6 %} rounded-tr-lg {% endif %}
+                        text-black text-sm font-bold px-2 py-1"
+                        style="border-top-left-radius: {% if i == 0 %}0.5rem{% else %}0{% endif %}; border-top-right-radius: {% if i == 6 %}0.5rem{% else %}0{% endif %};"
+                    >
+                        {{ days[i] }}
+                    </div>
+                    <!-- Macro Body (fills to the bottom, cyan or white) -->
+                    {% if i < 5 %}
+                        <div class="flex flex-col items-center py-1 px-2">
+                            <div class="font-bold text-sm text-black mb-1">
+                                {{ refeed_weekday_calories | default('1615KCals') }} KCals
+                            </div>
+                            <div class="text-xs text-black leading-tight text-left">
+                                <div>{{ refeed_weekday_protein | default('120g Protein') }}</div>
+                                <div>{{ refeed_weekday_carbs | default('142g Carbs') }}</div>
+                                <div>{{ refeed_weekday_fat | default('63g Fat') }}</div>
+                                <div>{{ refeed_weekday_fiber | default('24g Fibre') }}</div>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="flex flex-col items-center py-1 px-2">
+                            <div class="font-bold text-black mb-1">
+                                {{ refeed_weekend_calories | default('2000KCals') }} KCals
+                            </div>
+                            <div class="text-xs text-black leading-tight text-left">
+                                <div>{{ refeed_weekend_protein | default('120g Protein') }}</div>
+                                <div>{{ refeed_weekend_carbs | default('190g Carbs') }}</div>
+                                <div>{{ refeed_weekend_fat | default('84g Fat') }}</div>
+                                <div>{{ refeed_weekend_fiber | default('30g Fibre') }}</div>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Macronutrients Recommendations Section -->
+        <div class="mb-8">
+            <h2 class="text-2xl font-bold text-black mb-8 text-center">
+                Macronutrients Recommendations
+            </h2>
+
+            <!-- Macronutrient Boxes -->
+            <div class="flex justify-center space-x-12">
+                <!-- Protein -->
+                <div class="bg-gray-200 p-6 rounded-lg text-center">
+                    <div class="text-3xl font-bold text-black mb-2">
+                        {{ protein_percentage | default('28%') }}
+                    </div>
+                    <div class="text-lg font-semibold text-black">Protein</div>
+                </div>
+
+                <!-- Carbs -->
+                <div class="bg-gray-200 p-6 rounded-lg text-center">
+                    <div class="text-3xl font-bold text-black mb-2">
+                        {{ carbs_percentage | default('36%') }}
+                    </div>
+                    <div class="text-lg font-semibold text-black">Carbs</div>
+                </div>
+
+                <!-- Fats -->
+                <div class="bg-gray-200 p-6 rounded-lg text-center">
+                    <div class="text-3xl font-bold text-black mb-2">
+                        {{ fats_percentage | default('36%') }}
+                    </div>
+                    <div class="text-lg font-semibold text-black">Fats</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

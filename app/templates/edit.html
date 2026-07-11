@@ -1,0 +1,562 @@
+{% extends "base.html" %} {% block title %}Edit Metrics - Report Generator{% endblock %} 
+
+{% block extra_head %}
+<style>
+    .editable-field {
+        border-color: #6366f1 !important;
+        border-width: 2px !important;
+    }
+    .readonly-field {
+        background-color: #f3f4f6;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="px-4 py-6 sm:px-0">
+    {% if not db_session %}
+    <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
+        <p class="text-yellow-800">
+            No data found. Please
+            <a href="/" class="underline">generate a report</a> first.
+        </p>
+    </div>
+    {% else %} 
+    {% if error %}
+    <div class="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
+        <p class="text-red-800">{{ error }}</p>
+    </div>
+    {% endif %}
+
+    <form action="/edit" method="post">
+    <div class="bg-white shadow rounded-lg mb-6">
+        <div class="px-4 py-5 sm:p-6">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-900">Edit Report Metrics</h2>
+                <div class="flex space-x-3">
+                    <a href="/preview" class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                        Cancel
+                    </a>
+                    <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        Save Changes
+                    </button>
+                </div>
+            </div>
+
+            <div class="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                <p class="text-sm text-blue-700">
+                    <span class="font-medium">Tip:</span> Fields with a <span class="text-indigo-600 font-medium">purple border</span> are editable. Gray fields are calculated automatically.
+                </p>
+            </div>
+
+            <div class="space-y-10">
+
+                <!-- ============================================== -->
+                <!-- SECTION 1: Patient Demographics (Editable) -->
+                <!-- ============================================== -->
+                <div class="border-b border-gray-200 pb-8">
+                    <h3 class="text-lg font-medium text-gray-900 mb-4">
+                        <span class="inline-flex items-center">
+                            <svg class="w-5 h-5 mr-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                            </svg>
+                            Patient Demographics
+                            <span class="ml-2 text-xs font-normal text-indigo-600">(editable)</span>
+                        </span>
+                    </h3>
+                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                            <p class="px-3 py-2 bg-gray-100 rounded-md text-gray-900">{{ db_session.patient_name }}</p>
+                        </div>
+                        <div>
+                            <label for="age" class="block text-sm font-medium text-gray-700 mb-1">Age</label>
+                            <input type="number" name="age" id="age" value="{{ db_session.age }}" min="1" max="120"
+                                class="editable-field w-full px-3 py-2 border rounded-md focus:ring-indigo-500 focus:border-indigo-500" />
+                        </div>
+                        <div>
+                            <label for="weight_lbs" class="block text-sm font-medium text-gray-700 mb-1">Weight (lbs)</label>
+                            <input type="number" name="weight_lbs" id="weight_lbs" value="{{ '%.1f'|format(db_session.weight_kg * 2.20462) }}" step="0.1" min="50" max="500"
+                                class="editable-field w-full px-3 py-2 border rounded-md focus:ring-indigo-500 focus:border-indigo-500" />
+                        </div>
+                        <div>
+                            <label for="fat_percentage" class="block text-sm font-medium text-gray-700 mb-1">Body Fat %</label>
+                            <input type="number" name="fat_percentage" id="fat_percentage" value="{{ '%.1f'|format(db_session.body_fat_pct) }}" step="0.1" min="3" max="60"
+                                class="editable-field w-full px-3 py-2 border rounded-md focus:ring-indigo-500 focus:border-indigo-500" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================== -->
+                <!-- SECTION 2: RMR and Metabolic Settings -->
+                <!-- ============================================== -->
+                <div class="border-b border-gray-200 pb-8">
+                    <h3 class="text-lg font-medium text-gray-900 mb-4">
+                        <span class="inline-flex items-center">
+                            <svg class="w-5 h-5 mr-2 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"></path>
+                            </svg>
+                            RMR & Metabolic Settings
+                            <span class="ml-2 text-xs font-normal text-indigo-600">(editable)</span>
+                        </span>
+                    </h3>
+                    <div class="grid grid-cols-1 lg:grid-cols-4 gap-4">
+                        <div>
+                            <label for="rmr_time_start" class="block text-sm font-medium text-gray-700 mb-1">RMR Time Start (min)</label>
+                            <input type="number" name="rmr_time_start" id="rmr_time_start" value="{{ db_session.rmr_time_start|default(0, true) }}" step="0.5" min="0"
+                                class="editable-field w-full px-3 py-2 border rounded-md focus:ring-indigo-500 focus:border-indigo-500" />
+                        </div>
+                        <div>
+                            <label for="rmr_time_end" class="block text-sm font-medium text-gray-700 mb-1">RMR Time End (min)</label>
+                            <input type="number" name="rmr_time_end" id="rmr_time_end" value="{{ db_session.rmr_time_end|default(5, true) }}" step="0.5" min="0"
+                                class="editable-field w-full px-3 py-2 border rounded-md focus:ring-indigo-500 focus:border-indigo-500" />
+                        </div>
+                        <div>
+                            <label for="activity_level" class="block text-sm font-medium text-gray-700 mb-1">Activity Level</label>
+                            <select name="activity_level" id="activity_level" class="editable-field w-full px-3 py-2 border rounded-md focus:ring-indigo-500 focus:border-indigo-500">
+                                <option value="sedentary" {% if db_session.activity_level == 'sedentary' %}selected{% endif %}>Sedentary</option>
+                                <option value="light" {% if db_session.activity_level == 'light' %}selected{% endif %}>Light</option>
+                                <option value="moderate" {% if db_session.activity_level == 'moderate' %}selected{% endif %}>Moderate</option>
+                                <option value="active" {% if db_session.activity_level == 'active' %}selected{% endif %}>Active</option>
+                                <option value="very_active" {% if db_session.activity_level == 'very_active' %}selected{% endif %}>Very Active</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="weekly_weight_loss_lbs" class="block text-sm font-medium text-gray-700 mb-1">Weekly Weight Loss (lbs)</label>
+                            <input type="number" name="weekly_weight_loss_lbs" id="weekly_weight_loss_lbs" value="{{ db_session.weekly_weight_loss_lbs }}" step="0.25" min="0" max="3"
+                                class="editable-field w-full px-3 py-2 border rounded-md focus:ring-indigo-500 focus:border-indigo-500" />
+                        </div>
+                    </div>
+                    <div class="mt-4 grid grid-cols-1 lg:grid-cols-3 gap-4">
+                        <div class="bg-orange-50 p-4 rounded-lg">
+                            <p class="text-sm text-orange-600 mb-1">Calculated RMR</p>
+                            <p class="text-2xl font-bold text-orange-900">{{ metrics.rmr_kcal|int if metrics.rmr_kcal else '-' }} kcal/day</p>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <p class="text-sm text-gray-500 mb-1">TDEE</p>
+                            <p class="text-2xl font-bold text-gray-900">{{ metrics.tdee|int if metrics.tdee else '-' }} kcal</p>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <p class="text-sm text-gray-500 mb-1">Target Calories</p>
+                            <p class="text-2xl font-bold text-gray-900">{{ metrics.target_calories|int if metrics.target_calories else '-' }} kcal</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================== -->
+                <!-- SECTION 3: Nutrition / Protein -->
+                <!-- ============================================== -->
+                <div class="border-b border-gray-200 pb-8">
+                    <h3 class="text-lg font-medium text-gray-900 mb-4">
+                        <span class="inline-flex items-center">
+                            <svg class="w-5 h-5 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                            </svg>
+                            Nutrition Targets
+                        </span>
+                    </h3>
+                    <div class="mb-3 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+                        <p class="text-sm text-yellow-700">Only Protein is editable. Carbs and Fat are automatically recalculated to maintain the original ratio.</p>
+                    </div>
+                    <div class="grid grid-cols-2 lg:grid-cols-5 gap-4">
+                        <div>
+                            <label for="protein_g" class="block text-sm font-medium text-gray-700 mb-1">Protein (g) <span class="text-indigo-600">*</span></label>
+                            <input type="number" name="protein_g" id="protein_g" value="{{ metrics.protein_g|int if metrics.protein_g else '' }}" step="1" min="30" max="500"
+                                class="editable-field w-full px-3 py-2 border rounded-md focus:ring-indigo-500 focus:border-indigo-500" />
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Carbs (g)</label>
+                            <p class="px-3 py-2 bg-gray-100 rounded-md text-gray-900">{{ metrics.carbs_g|int if metrics.carbs_g else '-' }}</p>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Fat (g)</label>
+                            <p class="px-3 py-2 bg-gray-100 rounded-md text-gray-900">{{ metrics.fat_g|int if metrics.fat_g else '-' }}</p>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Fibre (g)</label>
+                            <p class="px-3 py-2 bg-gray-100 rounded-md text-gray-900">{{ metrics.fibre_g|int if metrics.fibre_g else '-' }}</p>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Target Cal</label>
+                            <p class="px-3 py-2 bg-gray-100 rounded-md text-gray-900">{{ metrics.target_calories|int if metrics.target_calories else '-' }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================== -->
+                <!-- SECTION 4: Spirometry Chart & Lung Capacity -->
+                <!-- ============================================== -->
+                <div class="border-b border-gray-200 pb-8">
+                    <h3 class="text-lg font-medium text-gray-900 mb-4">
+                        <span class="inline-flex items-center">
+                            <svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                            </svg>
+                            Spirometry & Lung Capacity
+                        </span>
+                    </h3>
+                    
+                    <!-- Spirometry Chart -->
+                    <div class="mb-6 bg-gray-50 rounded-lg p-4">
+                        <img src="/chart/{{ session.session_id }}/static/spirometry_chart.png" alt="Spirometry Chart" 
+                            class="w-full max-w-4xl mx-auto rounded-lg shadow-sm"
+                            onerror="this.parentElement.innerHTML='<p class=\'text-gray-500 text-center py-8\'>Spirometry chart not available</p>'" />
+                    </div>
+                    
+                    <!-- Lung Capacity (read-only, from spirometry data) -->
+                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <p class="text-sm text-blue-600">FVC (Best)</p>
+                            <p class="text-xl font-bold text-blue-900">{{ "%.2f"|format(metrics.fvc_best) if metrics.fvc_best else '-' }} L</p>
+                        </div>
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <p class="text-sm text-blue-600">FEV1 (Best)</p>
+                            <p class="text-xl font-bold text-blue-900">{{ "%.2f"|format(metrics.fev1_best) if metrics.fev1_best else '-' }} L</p>
+                        </div>
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <p class="text-sm text-blue-600">FEV1/FVC</p>
+                            <p class="text-xl font-bold text-blue-900">{{ "%.1f"|format(metrics.fev1_fvc_best) if metrics.fev1_fvc_best else '-' }}%</p>
+                        </div>
+                        <div class="bg-blue-100 p-4 rounded-lg">
+                            <p class="text-sm text-blue-600">Lung Capacity</p>
+                            <p class="text-xl font-bold text-blue-900 capitalize">{{ metrics.lung_capacity or 'Normal' }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================== -->
+                <!-- SECTION 5: Fat/CHO Chart & Zones -->
+                <!-- ============================================== -->
+                <div class="border-b border-gray-200 pb-8">
+                    <h3 class="text-lg font-medium text-gray-900 mb-4">
+                        <span class="inline-flex items-center">
+                            <svg class="w-5 h-5 mr-2 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"></path>
+                            </svg>
+                            Fuel Utilization & Heart Rate Zones
+                            <span class="ml-2 text-xs font-normal text-indigo-600">(editable)</span>
+                        </span>
+                    </h3>
+                    
+                    <!-- Fat/CHO Chart -->
+                    <div class="mb-6 bg-gray-50 rounded-lg p-4">
+                        <img src="/chart/{{ session.session_id }}/static/fat_metabolism_chart.png" alt="Fat/Carbs Metabolism Chart" 
+                            class="w-full max-w-4xl mx-auto rounded-lg shadow-sm"
+                            onerror="this.parentElement.innerHTML='<p class=\'text-gray-500 text-center py-8\'>Fat/CHO chart not available</p>'" />
+                    </div>
+                    
+                    <!-- Zone Mode Selection -->
+                    <div class="mb-4 p-4 bg-purple-50 border border-purple-200 rounded-lg">
+                        <label class="block text-sm font-medium text-purple-700 mb-2">Zone Calculation Mode</label>
+                        <div class="flex items-center space-x-6">
+                            <label class="inline-flex items-center">
+                                <input type="radio" name="zone_mode" value="vt_based" {% if db_session.zone_mode == 'vt_based' %}checked{% endif %}
+                                    class="form-radio text-indigo-600" onchange="toggleZoneMode(this.value)">
+                                <span class="ml-2 text-sm text-gray-700">VT-Based (automatic from VT1/VT2)</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="radio" name="zone_mode" value="manual" {% if db_session.zone_mode == 'manual' %}checked{% endif %}
+                                    class="form-radio text-indigo-600" onchange="toggleZoneMode(this.value)">
+                                <span class="ml-2 text-sm text-gray-700">Manual Entry</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- VT1 and VT2 Values (shown when VT-based) -->
+                    <div id="vt-based-section" class="{% if db_session.zone_mode == 'manual' %}hidden{% endif %}">
+                        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                            <div class="bg-green-50 p-4 rounded-lg">
+                                <p class="text-sm text-green-600">VT1 Heart Rate</p>
+                                <p class="text-xl font-bold text-green-900">{{ metrics.vt1_hr or '-' }} bpm</p>
+                            </div>
+                            <div class="bg-orange-50 p-4 rounded-lg">
+                                <p class="text-sm text-orange-600">VT2 Heart Rate</p>
+                                <p class="text-xl font-bold text-orange-900">{{ metrics.vt2_hr or '-' }} bpm</p>
+                            </div>
+                            <div>
+                                <label for="fat_max_value" class="block text-sm font-medium text-gray-700 mb-1">Fat Max (g/min)</label>
+                                <input type="number" name="fat_max_value" id="fat_max_value" value="{{ '%.2f'|format(metrics.fat_max_value) if metrics.fat_max_value else '' }}" step="0.01"
+                                    class="editable-field w-full px-3 py-2 border rounded-md focus:ring-indigo-500 focus:border-indigo-500" />
+                            </div>
+                            <div>
+                                <label for="crossover_hr" class="block text-sm font-medium text-gray-700 mb-1">Crossover HR (=VT1)</label>
+                                <input type="number" name="crossover_hr" id="crossover_hr" value="{{ metrics.crossover_hr if metrics.crossover_hr else '' }}"
+                                    class="editable-field w-full px-3 py-2 border rounded-md focus:ring-indigo-500 focus:border-indigo-500" />
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Manual Zone Entry (shown when Manual selected) -->
+                    <div id="manual-zone-section" class="{% if db_session.zone_mode != 'manual' %}hidden{% endif %}">
+                        <h4 class="text-md font-medium text-gray-700 mb-3">Enter Zone Boundaries (BPM)</h4>
+                        <div class="grid grid-cols-2 lg:grid-cols-6 gap-3">
+                            <div>
+                                <label for="zone1_start" class="block text-xs font-medium text-blue-700 mb-1">Zone 1 Start</label>
+                                <input type="number" name="zone1_start" id="zone1_start" value="{{ metrics.zone1_start or '' }}"
+                                    class="editable-field w-full px-2 py-1 text-sm border rounded-md" />
+                            </div>
+                            <div>
+                                <label for="zone2_start" class="block text-xs font-medium text-green-700 mb-1">Zone 2 Start</label>
+                                <input type="number" name="zone2_start" id="zone2_start" value="{{ metrics.zone2_start or '' }}"
+                                    class="editable-field w-full px-2 py-1 text-sm border rounded-md" />
+                            </div>
+                            <div>
+                                <label for="zone3_start" class="block text-xs font-medium text-yellow-700 mb-1">Zone 3 Start</label>
+                                <input type="number" name="zone3_start" id="zone3_start" value="{{ metrics.zone3_start or '' }}"
+                                    class="editable-field w-full px-2 py-1 text-sm border rounded-md" />
+                            </div>
+                            <div>
+                                <label for="zone4_start" class="block text-xs font-medium text-orange-700 mb-1">Zone 4 Start</label>
+                                <input type="number" name="zone4_start" id="zone4_start" value="{{ metrics.zone4_start or '' }}"
+                                    class="editable-field w-full px-2 py-1 text-sm border rounded-md" />
+                            </div>
+                            <div>
+                                <label for="zone5_start" class="block text-xs font-medium text-red-700 mb-1">Zone 5 Start</label>
+                                <input type="number" name="zone5_start" id="zone5_start" value="{{ metrics.zone5_start or '' }}"
+                                    class="editable-field w-full px-2 py-1 text-sm border rounded-md" />
+                            </div>
+                            <div>
+                                <label for="zone5_end" class="block text-xs font-medium text-red-700 mb-1">Zone 5 End</label>
+                                <input type="number" name="zone5_end" id="zone5_end" value="{{ metrics.zone5_end or '' }}"
+                                    class="editable-field w-full px-2 py-1 text-sm border rounded-md" />
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Current Heart Rate Zones Display -->
+                    <h4 class="text-md font-medium text-gray-700 mb-3 mt-6">Current Heart Rate Zones</h4>
+                    <div class="grid grid-cols-5 gap-2">
+                        <div class="bg-blue-100 p-3 rounded text-center">
+                            <p class="text-xs font-medium text-blue-900">Zone 1</p>
+                            <p class="text-sm font-bold text-blue-900">{{ metrics.zone1_start or '-' }}-{{ metrics.zone1_end or '-' }}</p>
+                        </div>
+                        <div class="bg-green-100 p-3 rounded text-center">
+                            <p class="text-xs font-medium text-green-900">Zone 2</p>
+                            <p class="text-sm font-bold text-green-900">{{ metrics.zone2_start or '-' }}-{{ metrics.zone2_end or '-' }}</p>
+                        </div>
+                        <div class="bg-yellow-100 p-3 rounded text-center">
+                            <p class="text-xs font-medium text-yellow-900">Zone 3</p>
+                            <p class="text-sm font-bold text-yellow-900">{{ metrics.zone3_start or '-' }}-{{ metrics.zone3_end or '-' }}</p>
+                        </div>
+                        <div class="bg-orange-100 p-3 rounded text-center">
+                            <p class="text-xs font-medium text-orange-900">Zone 4</p>
+                            <p class="text-sm font-bold text-orange-900">{{ metrics.zone4_start or '-' }}-{{ metrics.zone4_end or '-' }}</p>
+                        </div>
+                        <div class="bg-red-100 p-3 rounded text-center">
+                            <p class="text-xs font-medium text-red-900">Zone 5</p>
+                            <p class="text-sm font-bold text-red-900">{{ metrics.zone5_start or '-' }}-{{ metrics.zone5_end or '-' }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================== -->
+                <!-- SECTION 6: VO2 Max -->
+                <!-- ============================================== -->
+                <div class="border-b border-gray-200 pb-8">
+                    <h3 class="text-lg font-medium text-gray-900 mb-4">
+                        <span class="inline-flex items-center">
+                            <svg class="w-5 h-5 mr-2 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                            </svg>
+                            VO2 Max & Cardiovascular
+                            <span class="ml-2 text-xs font-normal text-indigo-600">(editable)</span>
+                        </span>
+                    </h3>
+                    <div class="grid grid-cols-1 lg:grid-cols-4 gap-4">
+                        <div>
+                            <label for="vo2_max_per_kg" class="block text-sm font-medium text-gray-700 mb-1">VO2 Max (ml/kg/min)</label>
+                            <input type="number" name="vo2_max_per_kg" id="vo2_max_per_kg" value="{{ '%.1f'|format(metrics.vo2_max_per_kg) if metrics.vo2_max_per_kg else '' }}" step="0.1"
+                                class="editable-field w-full px-3 py-2 border rounded-md focus:ring-indigo-500 focus:border-indigo-500" />
+                            <p class="mt-1 text-xs text-gray-500 capitalize">Category: {{ metrics.vo2_max_category or '-' }}</p>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <p class="text-sm text-gray-500">Peak HR</p>
+                            <p class="text-2xl font-bold text-gray-900">{{ metrics.peak_hr or '-' }} bpm</p>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <p class="text-sm text-gray-500">Peak VT</p>
+                            <p class="text-2xl font-bold text-gray-900">{{ "%.2f"|format(metrics.peak_vt) if metrics.peak_vt else '-' }} L</p>
+                        </div>
+                        <div>
+                            <label for="resting_hr" class="block text-sm font-medium text-gray-700 mb-1">Resting HR (bpm)</label>
+                            <input type="number" name="resting_hr" id="resting_hr" value="{{ metrics.resting_hr or '' }}" step="1" min="30" max="120"
+                                class="editable-field w-full px-3 py-2 border rounded-md focus:ring-indigo-500 focus:border-indigo-500" />
+                            <p class="mt-1 text-xs text-gray-500 capitalize">Category: {{ metrics.resting_hr_category or '-' }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================== -->
+                <!-- SECTION 7: VO2 Pulse Chart & Efficiency -->
+                <!-- ============================================== -->
+                <div class="border-b border-gray-200 pb-8">
+                    <h3 class="text-lg font-medium text-gray-900 mb-4">
+                        <span class="inline-flex items-center">
+                            <svg class="w-5 h-5 mr-2 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                            </svg>
+                            VO2 Pulse Efficiency
+                            <span class="ml-2 text-xs font-normal text-indigo-600">(editable)</span>
+                        </span>
+                    </h3>
+                    
+                    <!-- VO2 Pulse Chart -->
+                    <div class="mb-6 bg-gray-50 rounded-lg p-4">
+                        <img src="/chart/{{ session.session_id }}/static/vo2_pulse_chart.png" alt="VO2 Pulse Chart" 
+                            class="w-full max-w-4xl mx-auto rounded-lg shadow-sm"
+                            onerror="this.parentElement.innerHTML='<p class=\'text-gray-500 text-center py-8\'>VO2 Pulse chart not available</p>'" />
+                    </div>
+                    
+                    <!-- VO2 Pulse Drop Value -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                        <div class="p-4 border border-indigo-200 rounded-lg">
+                            <div class="flex items-center mb-3">
+                                <input type="checkbox" name="vo2_pulse_drops" id="vo2_pulse_drops" value="true"
+                                    {% if metrics.vo2_pulse_drops %}checked{% endif %}
+                                    class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                                    onchange="toggleDropField('vo2_pulse')">
+                                <label for="vo2_pulse_drops" class="ml-2 text-sm font-medium text-gray-700">VO2 Pulse efficiency drops</label>
+                            </div>
+                            <div id="vo2_pulse_drop_field" class="{% if not metrics.vo2_pulse_drops %}opacity-50{% endif %}">
+                                <label for="vo2_pulse_drop_bpm" class="block text-sm font-medium text-gray-700 mb-1">Drop at HR (bpm)</label>
+                                <input type="number" name="vo2_pulse_drop_bpm" id="vo2_pulse_drop_bpm" value="{{ metrics.vo2_pulse_drop_bpm or '' }}" step="1"
+                                    class="editable-field w-full px-3 py-2 border rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                                    {% if not metrics.vo2_pulse_drops %}disabled{% endif %} />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================== -->
+                <!-- SECTION 8: VO2 Breath Chart & Efficiency -->
+                <!-- ============================================== -->
+                <div class="border-b border-gray-200 pb-8">
+                    <h3 class="text-lg font-medium text-gray-900 mb-4">
+                        <span class="inline-flex items-center">
+                            <svg class="w-5 h-5 mr-2 text-teal-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"></path>
+                            </svg>
+                            VO2 Breathing Efficiency
+                            <span class="ml-2 text-xs font-normal text-indigo-600">(editable)</span>
+                        </span>
+                    </h3>
+                    
+                    <!-- VO2 Breath Chart -->
+                    <div class="mb-6 bg-gray-50 rounded-lg p-4">
+                        <img src="/chart/{{ session.session_id }}/static/vo2_breath_chart.png" alt="VO2 Breath Chart" 
+                            class="w-full max-w-4xl mx-auto rounded-lg shadow-sm"
+                            onerror="this.parentElement.innerHTML='<p class=\'text-gray-500 text-center py-8\'>VO2 Breath chart not available</p>'" />
+                    </div>
+                    
+                    <!-- VO2 Breath Drop Value -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                        <div class="p-4 border border-teal-200 rounded-lg">
+                            <div class="flex items-center mb-3">
+                                <input type="checkbox" name="vo2_breath_drops" id="vo2_breath_drops" value="true"
+                                    {% if metrics.vo2_breath_drops %}checked{% endif %}
+                                    class="h-4 w-4 text-teal-600 focus:ring-teal-500 border-gray-300 rounded"
+                                    onchange="toggleDropField('vo2_breath')">
+                                <label for="vo2_breath_drops" class="ml-2 text-sm font-medium text-gray-700">VO2 Breath efficiency drops</label>
+                            </div>
+                            <div id="vo2_breath_drop_field" class="{% if not metrics.vo2_breath_drops %}opacity-50{% endif %}">
+                                <label for="vo2_breath_drop_bpm" class="block text-sm font-medium text-gray-700 mb-1">Drop at HR (bpm)</label>
+                                <input type="number" name="vo2_breath_drop_bpm" id="vo2_breath_drop_bpm" value="{{ metrics.vo2_breath_drop_bpm or '' }}" step="1"
+                                    class="editable-field w-full px-3 py-2 border rounded-md focus:ring-teal-500 focus:border-teal-500"
+                                    {% if not metrics.vo2_breath_drops %}disabled{% endif %} />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================== -->
+                <!-- SECTION 9: Recovery Metrics -->
+                <!-- ============================================== -->
+                <div class="pb-6">
+                    <h3 class="text-lg font-medium text-gray-900 mb-4">
+                        <span class="inline-flex items-center">
+                            <svg class="w-5 h-5 mr-2 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                            </svg>
+                            Recovery Metrics
+                            <span class="ml-2 text-xs font-normal text-indigo-600">(editable)</span>
+                        </span>
+                    </h3>
+                    
+                    <!-- Recovery Chart -->
+                    <div class="mb-6 bg-gray-50 rounded-lg p-4">
+                        <img src="/chart/{{ session.session_id }}/static/recovery_chart.png" alt="Recovery Chart" 
+                            class="w-full max-w-4xl mx-auto rounded-lg shadow-sm"
+                            onerror="this.parentElement.innerHTML='<p class=\'text-gray-500 text-center py-8\'>Recovery chart not available</p>'" />
+                    </div>
+                    
+                    <!-- Recovery Values -->
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                        <div>
+                            <label for="cardiac_recovery_pct" class="block text-sm font-medium text-emerald-700 mb-1">Cardiac Recovery (1 min) %</label>
+                            <input type="number" name="cardiac_recovery_pct" id="cardiac_recovery_pct" value="{{ metrics.cardiac_recovery_pct|int if metrics.cardiac_recovery_pct else '' }}" step="1" min="0" max="100"
+                                class="editable-field w-full px-3 py-2 border rounded-md focus:ring-emerald-500 focus:border-emerald-500" />
+                        </div>
+                        <div>
+                            <label for="metabolic_recovery_pct" class="block text-sm font-medium text-sky-700 mb-1">CO2 Recovery (2 min) %</label>
+                            <input type="number" name="metabolic_recovery_pct" id="metabolic_recovery_pct" value="{{ metrics.metabolic_recovery_pct|int if metrics.metabolic_recovery_pct else '' }}" step="1" min="0" max="100"
+                                class="editable-field w-full px-3 py-2 border rounded-md focus:ring-sky-500 focus:border-sky-500" />
+                        </div>
+                        <div>
+                            <label for="breath_recovery_pct" class="block text-sm font-medium text-violet-700 mb-1">Breathing Freq Recovery (2.5 min) %</label>
+                            <input type="number" name="breath_recovery_pct" id="breath_recovery_pct" value="{{ metrics.breath_recovery_pct|int if metrics.breath_recovery_pct else '' }}" step="1" min="0" max="100"
+                                class="editable-field w-full px-3 py-2 border rounded-md focus:ring-violet-500 focus:border-violet-500" />
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Submit Button at bottom -->
+            <div class="mt-8 pt-6 border-t border-gray-200 flex justify-between items-center">
+                <a href="/preview" class="text-sm text-gray-500 hover:text-gray-700">Cancel and return to preview</a>
+                <button type="submit" class="inline-flex items-center px-6 py-3 border border-transparent shadow-sm text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    Save Changes & Recalculate
+                </button>
+            </div>
+        </div>
+    </div>
+    </form>
+    {% endif %}
+</div>
+
+<script>
+function toggleZoneMode(mode) {
+    const vtSection = document.getElementById('vt-based-section');
+    const manualSection = document.getElementById('manual-zone-section');
+    
+    if (mode === 'vt_based') {
+        vtSection.classList.remove('hidden');
+        manualSection.classList.add('hidden');
+    } else {
+        vtSection.classList.add('hidden');
+        manualSection.classList.remove('hidden');
+    }
+}
+
+function toggleDropField(prefix) {
+    const checkbox = document.getElementById(prefix + '_drops');
+    const field = document.getElementById(prefix + '_drop_field');
+    const input = document.getElementById(prefix + '_drop_bpm');
+    
+    if (checkbox.checked) {
+        field.classList.remove('opacity-50');
+        input.disabled = false;
+    } else {
+        field.classList.add('opacity-50');
+        input.disabled = true;
+        input.value = '';
+    }
+}
+</script>
+{% endblock %}

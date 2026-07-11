@@ -1,0 +1,161 @@
+<div class="page bg-white p-8 max-w-4xl mx-auto">
+    <!-- Header -->
+    <div class="mb-8">
+        <h1 class="text-3xl font-bold text-gray-900 mb-4">
+            Local Muscle Activity
+        </h1>
+        <h2 class="text-xl font-semibold text-gray-800 mb-2">
+            Muscle Oxygenation Assessment
+        </h2>
+        <p class="text-sm text-gray-600 leading-relaxed">
+            SMO2 testing (Skeletal Muscle Oxygen Saturation) is an analysis of
+            how effectively oxygen is being used at a particular muscle. It
+            helps determine limitations on if the muscle is effectively using
+            oxygen when exercising.
+        </p>
+    </div>
+
+    <!-- Combined Muscle Oxygenation Chart -->
+    <div class="mb-6">
+        <div class="flex justify-center mb-4">
+            <img
+                src="data:image/png;base64,{{ muscle_oxygenation_chart }}"
+                alt="Muscle Oxygenation Chart"
+                class="w-full h-auto max-w-6xl"
+            />
+        </div>
+    </div>
+
+    <!-- Metrics Summary Grid: Left and Right as two side-by-side panels, fields as two columns inside each -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+        <!-- Left Leg Metrics -->
+        <div class="bg-blue-50 p-3 rounded-lg border-l-4 border-blue-300 h-full flex flex-col">
+            <h3 class="text-base font-bold text-gray-900 mb-3 text-center">
+                Left Leg Analysis
+            </h3>
+            <div class="grid grid-cols-2 gap-3">
+                <!-- Baseline SmO2 -->
+                <div class="bg-white p-2 rounded shadow-sm col-span-2 md:col-span-1">
+                    <div class="text-xs font-semibold text-gray-700">
+                        Baseline SmO₂
+                    </div>
+                    <div class="text-base font-bold text-gray-900">
+                        {{ left_baseline_smo2 | default('75.4%') }}
+                    </div>
+                </div>
+                <!-- Minimum SmO2 -->
+                <div class="bg-white p-2 rounded shadow-sm col-span-2 md:col-span-1">
+                    <div class="text-xs font-semibold text-gray-700">
+                        Minimum SmO₂
+                    </div>
+                    <div class="text-base font-bold text-gray-900">
+                        {{ left_minimum_smo2 | default('69.3%') }}
+                    </div>
+                    <div class="text-xs text-gray-500">
+                        {{ left_minimum_lap | default('Lap 6') }}
+                    </div>
+                </div>
+                <!-- Oxygen Drop -->
+                <div class="bg-white p-2 rounded shadow-sm col-span-2 md:col-span-1">
+                    <div class="text-xs font-semibold text-gray-700">
+                        Oxygen Drop
+                    </div>
+                    <div class="text-base font-bold text-gray-900">
+                        {{ left_oxygen_drop | default('6.0%') }}
+                    </div>
+                    <div class="text-xs text-gray-500">
+                        {{ left_drop_percentage | default('8% decrease') }}
+                    </div>
+                </div>
+                <!-- Recovery -->
+                <div class="bg-white p-2 rounded shadow-sm col-span-2 md:col-span-1">
+                    <div class="text-xs font-semibold text-gray-700">
+                        Recovery
+                    </div>
+                    <div class="text-xs text-gray-500">Optimal &gt;100%</div>
+                    <div class="text-base font-bold text-green-600">
+                        {{ left_recovery_percentage | default('109%') }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Leg Metrics -->
+        <div class="bg-purple-50 p-3 rounded-lg border-l-4 border-purple-300 h-full flex flex-col">
+            <h3 class="text-base font-bold text-gray-900 mb-3 text-center">
+                Right Leg Analysis
+            </h3>
+            <div class="grid grid-cols-2 gap-3">
+                <!-- Baseline SmO2 -->
+                <div class="bg-white p-2 rounded shadow-sm col-span-2 md:col-span-1">
+                    <div class="text-xs font-semibold text-gray-700">
+                        Baseline SmO₂
+                    </div>
+                    <div class="text-base font-bold text-gray-900">
+                        {{ right_baseline_smo2 | default('82.9%') }}
+                    </div>
+                </div>
+                <!-- Minimum SmO2 -->
+                <div class="bg-white p-2 rounded shadow-sm col-span-2 md:col-span-1">
+                    <div class="text-xs font-semibold text-gray-700">
+                        Minimum SmO₂
+                    </div>
+                    <div class="text-base font-bold text-gray-900">
+                        {{ right_minimum_smo2 | default('73.7%') }}
+                    </div>
+                    <div class="text-xs text-gray-500">
+                        {{ right_minimum_lap | default('Lap 6') }}
+                    </div>
+                </div>
+                <!-- Oxygen Drop -->
+                <div class="bg-white p-2 rounded shadow-sm col-span-2 md:col-span-1">
+                    <div class="text-xs font-semibold text-gray-700">
+                        Oxygen Drop
+                    </div>
+                    <div class="text-base font-bold text-gray-900">
+                        {{ right_oxygen_drop | default('9.3%') }}
+                    </div>
+                    <div class="text-xs text-gray-500">
+                        {{ right_drop_percentage | default('11% decrease') }}
+                    </div>
+                </div>
+                <!-- Recovery -->
+                <div class="bg-white p-2 rounded shadow-sm col-span-2 md:col-span-1">
+                    <div class="text-xs font-semibold text-gray-700">
+                        Recovery
+                    </div>
+                    <div class="text-xs text-gray-500">Optimal &gt;100%</div>
+                    <div class="text-base font-bold text-blue-600">
+                        {{ right_recovery_percentage | default('97%') }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Key Findings Summary -->
+    <div class="bg-gray-100 p-3 rounded-lg">
+        <h3 class="text-sm font-bold text-gray-900 mb-2">Key Findings</h3>
+        <div class="text-xs text-gray-700 space-y-1">
+            <p>
+                • <strong>Left leg</strong> showed better oxygen maintenance
+                during high-intensity work
+            </p>
+            <p>
+                •
+                <strong>
+                    {{ recovery_assessment | default('Excellent recovery capacity') }}
+                </strong>
+                - both legs recovered well
+            </p>
+            <p>
+                • <strong>Heart rate progression:</strong> {{ hr_warmup |
+                default('93') }} → {{ hr_max | default('168') }} bpm
+            </p>
+            <p>
+                • <strong>Test duration:</strong> {{ test_duration |
+                default('~21 minutes active test') }}
+            </p>
+        </div>
+    </div>
+</div>

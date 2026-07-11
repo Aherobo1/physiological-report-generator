@@ -1,0 +1,16 @@
+[project]
+name = "report-generation"
+version = "0.1.0"
+description = "Generating report for ISHP labs"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi[all]>=0.121.3",
+    "matplotlib>=3.10.7",
+    "openpyxl>=3.1.5",
+    "pandas>=2.3.3",
+    "playwright>=1.56.0",
+    "requests>=2.32.5",
+    "seaborn>=0.13.2",
+    "sqlalchemy>=2.0.45",
+]

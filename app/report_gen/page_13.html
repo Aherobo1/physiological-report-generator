@@ -1,0 +1,136 @@
+<div class="w-full page bg-white">
+
+    <!-- Main Content -->
+    <div class="px-8 py-6">
+        <!-- Fat Metabolism Section -->
+        <div class="mb-2">
+            <h2 class="text-xl font-bold text-black mb-4 text-center">
+                Fat Metabolism
+            </h2>
+
+            <!-- Fat Metabolism Info Boxes -->
+            <div class="grid grid-cols-2 gap-4 mb-4">
+                <!-- Fat Max Box -->
+                <div class="bg-gray-200 p-3 rounded-lg text-center">
+                    <h3 class="text-base font-bold text-black mb-2">Fat Max</h3>
+                    <p class="text-xs text-gray-600 italic mb-2">
+                        {{ fat_max_optimal | default('*Optimal
+                        10-12Kcals/minute') }}
+                    </p>
+                    <p class="text-lg font-bold text-black">
+                        {{ fat_max_value | default('3.8Kcals/min') }}
+                    </p>
+                    <p class="text-xs text-black">
+                        {{ fat_max_heart_rate | default('49% of Max Heart Rate')
+                        }}
+                    </p>
+                    <p class="text-xs text-black">
+                        {{ fat_max_bpm | default('97 bpm') }}
+                    </p>
+                </div>
+
+                <!-- Carbs and Fat Crossover Box -->
+                <div class="bg-gray-200 p-3 rounded-lg text-center">
+                    <h3 class="text-base font-bold text-black mb-3">
+                        Carbs and Fat Crossover
+                    </h3>
+                    <p class="text-lg font-bold text-black">
+                        {{ crossover_bpm | default('100bpm') }}
+                    </p>
+                    <p class="text-xs text-black">
+                        {{ crossover_heart_rate | default('51% of Max Heart
+                        Rate') }}
+                    </p>
+                </div>
+            </div>
+
+            <!-- Fat Metabolism Graph -->
+            <div class="mb-4">
+                <!-- <div class="bg-gray-100 p-2 rounded-lg mb-2">
+                    <p class="text-black font-semibold text-center text-sm"></p>
+                        {{ fat_metabolism_note | default('100bpm at a speed of
+                        4.0mph and incline of 2%') }}
+                    </p>
+                </div> -->
+
+                <div class="flex justify-center">
+                    <img
+                        src="data:image/png;base64, {{ fat_metabolism_chart }}"
+                        alt="Fat Metabolism Chart"
+                        class="w-full max-w-4xl h-auto object-contain"
+                    />
+                </div>
+            </div>
+        </div>
+
+        <!-- Recovery Section -->
+        <div class="mb-2">
+            <h2 class="text-xl font-bold text-black mb-4 text-center">
+                Recovery
+            </h2>
+
+            <!-- Recovery Info Boxes -->
+            <div class="grid grid-cols-3 gap-4 mb-4">
+                <!-- Cardiac Recovery -->
+                <div class="bg-gray-200 p-3 rounded-lg text-center">
+                    <h3 class="text-sm font-bold text-black mb-2">
+                        Cardiac Recovery
+                    </h3>
+                    <p class="text-xs text-gray-600 mb-2">
+                        {{ cardiac_recovery_time | default('(1 minute)') }}
+                    </p>
+                    <p class="text-lg font-bold text-black">
+                        {{ cardiac_recovery_percentage | default('33%') }}
+                    </p>
+                </div>
+
+                <!-- Metabolic Recovery -->
+                <div class="bg-gray-200 p-3 rounded-lg text-center">
+                    <h3 class="text-sm font-bold text-black mb-2">
+                        Metabolic (CO2) Recovery
+                    </h3>
+                    <p class="text-xs text-gray-600 mb-2">
+                        {{ metabolic_recovery_time | default('(2 minute)') }}
+                    </p>
+                    <p class="text-lg font-bold text-black">
+                        {{ metabolic_recovery_percentage | default('65%') }}
+                    </p>
+                </div>
+
+                <!-- Breath Frequency Recovery -->
+                <div class="bg-gray-200 p-3 rounded-lg text-center">
+                    <h3 class="text-sm font-bold text-black mb-2">
+                        Breath Frequency Recovery
+                    </h3>
+                    <p class="text-xs text-gray-600 mb-2">
+                        {{ breath_recovery_time | default('(2.5 minute)') }}
+                    </p>
+                    <p class="text-lg font-bold text-black">
+                        {{ breath_recovery_percentage | default('76%') }}
+                    </p>
+                </div>
+            </div>
+
+            <!-- Recovery Graph -->
+            <div class="flex justify-center mb-6">
+                <img
+                    src="data:image/png;base64, {{ recovery_chart }}"
+                    alt="Recovery Chart"
+                    class="w-full max-w-4xl h-auto object-contain"
+                />
+            </div>
+        </div>
+
+        <!-- Resting Heart Rate Table -->
+        <div class="mb-2">
+            <div class="flex justify-center">
+                <img
+                    src="data:image/png;base64, {{ rhr_table }}"
+                    alt="Resting Heart Rate Table"
+                    class="table-image"
+                />
+            </div>
+        </div>
+    </div>
+
+</div>

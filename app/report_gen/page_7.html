@@ -1,0 +1,56 @@
+<div class="w-full page bg-white p-4">
+    <!-- Header -->
+    <h1 class="text-3xl font-bold mb-2">Lung Analysis</h1>
+
+    <!-- Spirometry Assessment Section -->
+    <div class="mb-2">
+        <h2 class="text-xl font-semibold mb-4">Spirometry Assessment</h2>
+        <p class="text-sm text-gray-700 mb-4">
+            Spirometry is a diagnostic device that assesses how well a person
+            breathes and how their lungs are functioning. Lung function is
+            crucial for oxygen delivery during physical activity. Comparing
+            results to expected/normal values can highlight potential
+            limitations that would require additional lung training to improve
+            overall physical activity.
+        </p>
+
+        <!-- Lung Volume Chart -->
+        <div class="flex justify-center">
+            <img
+                src="data:image/png;base64,{{ lung_analysis_chart }}"
+                alt="Lung Volume Analysis Chart"
+                class="w-full max-w-4xl h-auto object-contain"
+            />
+        </div>
+
+        <!-- Indications Box -->
+        <div class="bg-gray-200 rounded-lg p-4 text-center mb-2">
+            <h3 class="font-semibold text-lg mb-2">Indications</h3>
+            <p >{{ indication | default('No')}} Respirtory Capacity Limitation</p>
+        </div>
+    </div>
+
+    <!-- Respiratory Section -->
+    <div class="mb-4">
+        <h2 class="text-xl font-semibold mb-4 text-center">Respiratory</h2>
+
+        <!-- Respiratory Chart -->
+        <div class="flex justify-center mb-4">
+            <img
+                src="data:image/png;base64,{{ respiratory_analysis_chart }}"
+                alt="Respiratory Analysis Chart"
+                class="w-full mb-4 object-contain max-w-4xl h-auto"
+            />
+        </div>
+
+        <!-- Peak VT Info Box -->
+        <div class="bg-gray-200 rounded-lg p-4 text-center">
+            <h3 class="font-semibold mb-2">Peak VT</h3>
+            <p class="text-sm">
+                {{ peak_vt }} L/Breath which occurs at {{ peak_vt_bpm }} bpm
+                (Zone {{ peak_vt_zone }})
+            </p>
+            <p class="text-sm">{{ fev1_percentage }}% of FEV1</p>
+        </div>
+    </div>
+</div>

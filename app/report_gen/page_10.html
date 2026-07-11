@@ -1,0 +1,27 @@
+<div class="w-full page bg-white">
+    <!-- Main Content -->
+    <div class="flex flex-col items-center justify-center h-full">
+        <!-- Title -->
+        <h1 class="text-2xl font-bold text-center text-gray-800 mb-6">
+            Fuel Utilization Report - Institute of Science, Health and
+            Performance
+        </h1>
+
+        <!-- Fuel Utilization Chart -->
+        <div class="w-full max-w-5xl">
+            <img
+                src="data:image/png;base64,{{ fuel_utilization_chart }}"
+                alt="Fuel Utilization Report - Institute of Science, Health and Performance"
+                class="w-full h-auto object-contain chart-large"
+            />
+        </div>
+
+        <!-- Chart Information -->
+        <div class="mt-8 text-center">
+            <p class="text-gray-700 text-sm">
+                Client: {{ client_name }} | Assessment Date: {{ assessment_date
+                }}
+            </p>
+        </div>
+    </div>
+</div>

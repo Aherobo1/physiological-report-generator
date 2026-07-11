@@ -1,0 +1,299 @@
+<div class="w-full page bg-white">
+    <!-- Main Content -->
+    <div class="px-4 py-3">
+        <!-- Page Title -->
+        <h1 class="text-lg font-bold text-black mb-3">Relative VO2</h1>
+
+        <!-- Relative VO2 Chart Section -->
+        <div class="mb-3">
+            <div class="flex justify-center">
+                <img
+                    src="data:image/png;base64,{{ relative_vo2_chart }}"
+                    alt="Relative VO2 at Each Stage vs VO2max"
+                    class="w-full max-w-3xl h-auto object-contain"
+                />
+            </div>
+        </div>
+
+        <!-- Race Distance Table Section -->
+        <div class="mb-3">
+            <div class="overflow-x-auto">
+                <table
+                    class="min-w-full bg-white border border-gray-300 text-2xs"
+                >
+                    <thead class="bg-gray-800 text-white">
+                        <tr>
+                            <th
+                                class="px-2 py-1 border border-gray-300 font-bold text-2xs"
+                            >
+                                Race Distance
+                            </th>
+                            <th
+                                class="px-2 py-1 border border-gray-300 font-bold text-2xs"
+                            >
+                                Recreational Male &lt;40
+                            </th>
+                            <th
+                                class="px-2 py-1 border border-gray-300 font-bold text-2xs"
+                            >
+                                Male 40-59
+                            </th>
+                            <th
+                                class="px-2 py-1 border border-gray-300 font-bold text-2xs"
+                            >
+                                Male 60+
+                            </th>
+                            <th
+                                class="px-2 py-1 border border-gray-300 font-bold text-2xs"
+                            >
+                                Recreational Female &lt;40
+                            </th>
+                            <th
+                                class="px-2 py-1 border border-gray-300 font-bold text-2xs"
+                            >
+                                Female 40-59
+                            </th>
+                            <th
+                                class="px-2 py-1 border border-gray-300 font-bold text-2xs"
+                            >
+                                Female 60+
+                            </th>
+                            <th
+                                class="px-2 py-1 border border-gray-300 font-bold text-2xs"
+                            >
+                                Notes
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td
+                                class="px-2 py-1 border border-gray-300 font-bold text-2xs"
+                            >
+                                10K
+                            </td>
+                            <td
+                                class="px-2 py-1 border border-gray-300 text-center text-2xs"
+                            >
+                                88–90%
+                            </td>
+                            <td
+                                class="px-2 py-1 border border-gray-300 text-center text-2xs"
+                            >
+                                85–88%
+                            </td>
+                            <td
+                                class="px-2 py-1 border border-gray-300 text-center text-2xs"
+                            >
+                                80–85%
+                            </td>
+                            <td
+                                class="px-2 py-1 border border-gray-300 text-center text-2xs"
+                            >
+                                88–90%
+                            </td>
+                            <td
+                                class="px-2 py-1 border border-gray-300 text-center text-2xs"
+                            >
+                                72–83%
+                            </td>
+                            <td
+                                class="px-2 py-1 border border-gray-300 text-center text-2xs"
+                            >
+                                72–81%
+                            </td>
+                            <td
+                                class="px-2 py-1 border border-gray-300 text-2xs"
+                            >
+                                Close to VO2max
+                            </td>
+                        </tr>
+                        <tr class="bg-gray-50">
+                            <td
+                                class="px-2 py-1 border border-gray-300 font-bold text-2xs"
+                            >
+                                Half Marathon
+                            </td>
+                            <td
+                                class="px-2 py-1 border border-gray-300 text-center text-2xs"
+                            >
+                                75–85%
+                            </td>
+                            <td
+                                class="px-2 py-1 border border-gray-300 text-center text-2xs"
+                            >
+                                73–83%
+                            </td>
+                            <td
+                                class="px-2 py-1 border border-gray-300 text-center text-2xs"
+                            >
+                                70–78%
+                            </td>
+                            <td
+                                class="px-2 py-1 border border-gray-300 text-center text-2xs"
+                            >
+                                75–85%
+                            </td>
+                            <td
+                                class="px-2 py-1 border border-gray-300 text-center text-2xs"
+                            >
+                                70–80%
+                            </td>
+                            <td
+                                class="px-2 py-1 border border-gray-300 text-center text-2xs"
+                            >
+                                67–76%
+                            </td>
+                            <td
+                                class="px-2 py-1 border border-gray-300 text-2xs"
+                            >
+                                Near lactate threshold
+                            </td>
+                        </tr>
+                        <tr>
+                            <td
+                                class="px-2 py-1 border border-gray-300 font-bold text-2xs"
+                            >
+                                Marathon
+                            </td>
+                            <td
+                                class="px-2 py-1 border border-gray-300 text-center text-2xs"
+                            >
+                                65–75%
+                            </td>
+                            <td
+                                class="px-2 py-1 border border-gray-300 text-center text-2xs"
+                            >
+                                63–72%
+                            </td>
+                            <td
+                                class="px-2 py-1 border border-gray-300 text-center text-2xs"
+                            >
+                                60–68%
+                            </td>
+                            <td
+                                class="px-2 py-1 border border-gray-300 text-center text-2xs"
+                            >
+                                65–75%
+                            </td>
+                            <td
+                                class="px-2 py-1 border border-gray-300 text-center text-2xs"
+                            >
+                                62–72%
+                            </td>
+                            <td
+                                class="px-2 py-1 border border-gray-300 text-center text-2xs"
+                            >
+                                60–68%
+                            </td>
+                            <td
+                                class="px-2 py-1 border border-gray-300 text-2xs"
+                            >
+                                Economy and fueling critical
+                            </td>
+                        </tr>
+                        <tr class="bg-gray-50">
+                            <td
+                                class="px-2 py-1 border border-gray-300 font-bold text-2xs"
+                            >
+                                Ultra (&gt;50K)
+                            </td>
+                            <td
+                                class="px-2 py-1 border border-gray-300 text-center text-2xs"
+                            >
+                                58–65%
+                            </td>
+                            <td
+                                class="px-2 py-1 border border-gray-300 text-center text-2xs"
+                            >
+                                53–62%
+                            </td>
+                            <td
+                                class="px-2 py-1 border border-gray-300 text-center text-2xs"
+                            >
+                                50–58%
+                            </td>
+                            <td
+                                class="px-2 py-1 border border-gray-300 text-center text-2xs"
+                            >
+                                58–65%
+                            </td>
+                            <td
+                                class="px-2 py-1 border border-gray-300 text-center text-2xs"
+                            >
+                                50–60%
+                            </td>
+                            <td
+                                class="px-2 py-1 border border-gray-300 text-center text-2xs"
+                            >
+                                47–55%
+                            </td>
+                            <td
+                                class="px-2 py-1 border border-gray-300 text-2xs"
+                            >
+                                Fatigue and fueling dominant
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Training Recommendations Section -->
+        <div class="grid grid-cols-2 gap-3 mt-3">
+            <!-- Left Column -->
+            <div class="bg-white p-3 rounded-lg border border-gray-200">
+                <h2 class="text-sm font-bold text-black mb-2 text-center">
+                    IMPROVING VO<sub>2</sub> AND ECONOMY AT RACE PACE
+                </h2>
+                <div class="mb-2">
+                    <h3 class="font-bold text-2xs text-black mb-1">
+                        BOOSTING AT RACE PACE
+                    </h3>
+                    <p class="text-2xs text-gray-700 mb-1">
+                        <strong>Goal:</strong> Raise the ceiling
+                    </p>
+                    <ul
+                        class="text-2xs text-gray-700 space-y-0.5 list-disc pl-4"
+                    >
+                        <li>
+                            <strong>Interval Training:</strong> 3-5 min
+                            intervals at ~85-90% VO<sub>2</sub>max
+                        </li>
+                        <li>
+                            <strong>Hill Repeats:</strong> Short, steep climbs
+                            at max effort
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="bg-white p-3 rounded-lg border border-gray-200">
+                <h2 class="text-sm font-bold text-black mb-2 text-center">
+                    IMPROVING POWER AT RACE PACE
+                </h2>
+                <div class="mb-2">
+                    <h3 class="font-bold text-2xs text-black mb-1">
+                        IMPROVING POWER
+                    </h3>
+                    <p class="text-2xs text-gray-700 mb-1">
+                        <strong>Goal:</strong> Lower the cost
+                    </p>
+                    <ul
+                        class="text-2xs text-gray-700 space-y-0.5 list-disc pl-4"
+                    >
+                        <li>
+                            <strong>Strength Training:</strong> 2-3 sessions per
+                            week
+                        </li>
+                        <li>
+                            <strong>Running Form Drills:</strong> Strides, high
+                            knees
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
